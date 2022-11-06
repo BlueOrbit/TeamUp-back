@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 public class AuthController {
@@ -14,6 +15,7 @@ public class AuthController {
     @Autowired
     private UserDao userDao;
 
+    @CrossOrigin
     @GetMapping("/login")
     public String login(@RequestParam("email") String email,
                           @RequestParam("password") String password){
@@ -30,6 +32,7 @@ public class AuthController {
         }
     }
 
+    @CrossOrigin
     @GetMapping("/register")
     public String register(@RequestParam("email") String email,
                         @RequestParam("password") String password){
