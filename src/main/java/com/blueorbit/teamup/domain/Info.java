@@ -2,7 +2,6 @@ package com.blueorbit.teamup.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
@@ -25,6 +24,8 @@ public class Info implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    private Long team_id;
 
     private String course;
 
