@@ -1,5 +1,6 @@
 package com.blueorbit.teamup.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blueorbit.teamup.dao.InfoDao;
 import com.blueorbit.teamup.domain.Info;
 import com.blueorbit.teamup.service.IInfoService;
@@ -10,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author BlueOrbit
@@ -42,6 +43,13 @@ public class InfoServiceImpl implements IInfoService {
     @Override
     public Info getById(Long id) {
         return infoDao.selectById(id);
+    }
+
+    @Override
+    public Info getByTeamId(Long id) {
+        LambdaQueryWrapper<Info> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Info::getTeam_id,id);
+        return infoDao.selectOne(lqw);
     }
 
     @Override

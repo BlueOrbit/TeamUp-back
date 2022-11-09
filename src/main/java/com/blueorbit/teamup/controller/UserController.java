@@ -24,6 +24,7 @@ public class UserController {
 
     @PostMapping
     public Result save(@RequestBody User user){
+        user.setTeams("");
         boolean flag = userService.save(user);
         return new Result(flag ? Code.SAVE_USER_OK : Code.SAVE_USER_ERR,flag);
     }
