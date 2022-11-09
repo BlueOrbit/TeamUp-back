@@ -23,12 +23,12 @@ class TeamUpApplicationTests {
 	@Autowired
 	private InfoDao infoDao;
 
-	@Test
+
 	void contextLoads() {
 		System.out.println("222");
 
 	}
-	@Test
+
 	void testInsert(){
 		User user = new User();
 		user.setEmail("ooo");
@@ -38,7 +38,6 @@ class TeamUpApplicationTests {
 		userDao.insert(user);
 	}
 
-	@Test
 	void testTeamInsert(){
 		Team team = new Team();
 		Info info = new Info();
