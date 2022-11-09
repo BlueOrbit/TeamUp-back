@@ -25,11 +25,11 @@ public class Info implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Long team_id;
+    private Long teamId;
 
     private String course;
 
-    private Integer number_limit;
+    private Integer numberLimit;
 
     private String content;
 

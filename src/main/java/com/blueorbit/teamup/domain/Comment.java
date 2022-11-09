@@ -25,9 +25,9 @@ public class Comment implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Long sender_id;
+    private Long senderId;
 
-    private Long team_id;
+    private Long teamId;
 
     private String date;
 

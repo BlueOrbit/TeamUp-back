@@ -48,7 +48,7 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public List<Comment> getByTeamId(Long id) {
         LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Comment::getTeam_id,id);
+        lqw.eq(Comment::getTeamId,id);
         return commentDao.selectList(lqw);
     }
 

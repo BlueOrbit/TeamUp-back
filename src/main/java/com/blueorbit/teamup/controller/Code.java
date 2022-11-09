@@ -25,4 +25,16 @@ public class Code {
     public static final Integer GET_TEAM_ERR = 200140;
     public static final Integer GET_ALL_TEAM_ERR =200150;
 
+    public static final Integer SAVE_COMMENT_OK = 200211;
+    public static final Integer DELETE_COMMENT_OK = 200221;
+    public static final Integer UPDATE_COMMENT_OK = 200231;
+    public static final Integer GET_COMMENT_OK = 200241;
+    public static final Integer GET_ALL_COMMENT_OK =200251;
+
+    public static final Integer SAVE_COMMENT_ERR = 200210;
+    public static final Integer DELETE_COMMENT_ERR = 200220;
+    public static final Integer UPDATE_COMMENT_ERR = 200230;
+    public static final Integer GET_COMMENT_ERR = 200240;
+    public static final Integer GET_ALL_COMMENT_ERR =200250;
+
 }

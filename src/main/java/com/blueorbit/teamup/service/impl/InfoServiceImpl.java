@@ -35,6 +35,14 @@ public class InfoServiceImpl implements IInfoService {
     }
 
     @Override
+    public boolean updateByTeamId(Info info,Long tid) {
+        LambdaQueryWrapper<Info> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Info::getTeamId,tid);
+        infoDao.update(info,lqw);
+        return true;
+    }
+
+    @Override
     public boolean delete(Long id) {
         infoDao.deleteById(id);
         return true;
@@ -48,7 +56,7 @@ public class InfoServiceImpl implements IInfoService {
     @Override
     public Info getByTeamId(Long id) {
         LambdaQueryWrapper<Info> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Info::getTeam_id,id);
+        lqw.eq(Info::getTeamId,id);
         return infoDao.selectOne(lqw);
     }
 

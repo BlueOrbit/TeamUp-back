@@ -33,15 +33,4 @@ public class User implements Serializable {
 
     private String teams;
 
-    public boolean joinTeam(Long team_id){
-        if (teams.length() + team_id.toString().length() < 32){
-            teams = teams + team_id.toString();
-            return true;//加入成功
-        }
-        else {
-            return false;//teams 长度太长，不能存入数据库
-        }
-
-    }
-
 }

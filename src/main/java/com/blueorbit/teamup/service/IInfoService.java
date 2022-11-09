@@ -19,6 +19,8 @@ public interface IInfoService {
 
     public boolean update(Info info);
 
+    public boolean updateByTeamId(Info info,Long tid);
+
     public boolean delete(Long id);
 
     public Info getById(Long id);
