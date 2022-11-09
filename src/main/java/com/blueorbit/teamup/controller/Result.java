@@ -1,8 +1,8 @@
 package com.blueorbit.teamup.controller;
 
 public class Result {
-    private Object data;
     private Integer code;
+    private Object data;
     private String msg;
 
     public Result() {

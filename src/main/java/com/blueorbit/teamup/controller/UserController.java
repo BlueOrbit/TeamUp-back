@@ -17,7 +17,7 @@ import java.util.List;
  * @since 2022-11-02
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private IUserService userService;
