@@ -23,5 +23,7 @@ public interface ICommentService {
 
     public Comment getById(Long id);
 
+    public List<Comment> getByTeamId(Long id);
+
     public List<Comment> getAll();
 }

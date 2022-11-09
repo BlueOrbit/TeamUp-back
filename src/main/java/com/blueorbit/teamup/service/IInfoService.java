@@ -23,6 +23,8 @@ public interface IInfoService {
 
     public Info getById(Long id);
 
+    public Info getByTeamId(Long id);
+
     public List<Info> getAll();
 
 }

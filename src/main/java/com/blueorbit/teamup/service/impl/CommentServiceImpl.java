@@ -1,5 +1,6 @@
 package com.blueorbit.teamup.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blueorbit.teamup.dao.CommentDao;
 import com.blueorbit.teamup.domain.Comment;
 import com.blueorbit.teamup.service.ICommentService;
@@ -42,6 +43,13 @@ public class CommentServiceImpl implements ICommentService {
     @Override
     public Comment getById(Long id) {
         return commentDao.selectById(id);
+    }
+
+    @Override
+    public List<Comment> getByTeamId(Long id) {
+        LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Comment::getTeam_id,id);
+        return commentDao.selectList(lqw);
     }
 
     @Override
