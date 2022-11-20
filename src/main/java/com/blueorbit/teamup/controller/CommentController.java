@@ -5,7 +5,7 @@ import com.blueorbit.teamup.domain.Comment;
 import com.blueorbit.teamup.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +18,7 @@ import java.util.List;
  * @since 2022-11-02
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/comments")
 public class CommentController {
     @Autowired
