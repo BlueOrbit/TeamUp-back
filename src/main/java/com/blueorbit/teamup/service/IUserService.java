@@ -23,5 +23,7 @@ public interface IUserService {
 
     public User getById(Long id);
 
+    public User getByEmail(String email);
+
     public List<User> getAll();
 }

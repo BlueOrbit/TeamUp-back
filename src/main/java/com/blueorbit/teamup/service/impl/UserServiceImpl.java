@@ -1,5 +1,6 @@
 package com.blueorbit.teamup.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blueorbit.teamup.dao.UserDao;
 import com.blueorbit.teamup.domain.User;
 import com.blueorbit.teamup.service.IUserService;
@@ -42,6 +43,13 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getById(Long id) {
         return userDao.selectById(id);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(User::getEmail,email);
+        return userDao.selectOne(lqw);
     }
 
     @Override

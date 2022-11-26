@@ -1,6 +1,11 @@
 package com.blueorbit.teamup.controller;
 
 public class Code {
+
+    public static final Integer LOGIN_OK = 200001;
+
+    public static final Integer LOGIN_ERR = 200000;
+
     public static final Integer SAVE_USER_OK = 200011;
     public static final Integer DELETE_USER_OK = 200021;
     public static final Integer UPDATE_USER_OK = 200031;
@@ -37,4 +42,15 @@ public class Code {
     public static final Integer GET_COMMENT_ERR = 200240;
     public static final Integer GET_ALL_COMMENT_ERR =200250;
 
+    public static final Integer SAVE_APPLICATION_OK = 200211;
+    public static final Integer DELETE_APPLICATION_OK = 200221;
+    public static final Integer UPDATE_APPLICATION_OK = 200231;
+    public static final Integer GET_APPLICATION_OK = 200241;
+    public static final Integer GET_ALL_APPLICATION_OK =200251;
+
+    public static final Integer SAVE_APPLICATION_ERR = 200210;
+    public static final Integer DELETE_APPLICATION_ERR = 200220;
+    public static final Integer UPDATE_APPLICATION_ERR = 200230;
+    public static final Integer GET_APPLICATION_ERR = 200240;
+    public static final Integer GET_ALL_APPLICATION_ERR =200250;
 }
