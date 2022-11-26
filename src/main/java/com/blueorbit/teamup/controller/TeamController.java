@@ -8,21 +8,13 @@ import com.blueorbit.teamup.service.IInfoService;
 import com.blueorbit.teamup.service.ITeamService;
 import com.blueorbit.teamup.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ *  前端控制器
  * </p>
  *
  * @author BlueOrbit
@@ -39,14 +31,8 @@ public class TeamController {
     private IUserService userService;
     @Autowired
     private ICommentService commentService;
-
-    /**
-     * create and save a new team, add initial teammates
-     * @param teamInfo json input from front, must contain creatorId
-     * @return json result which contains indicate code, data and msg
-     */
     @PostMapping
-    public Result save(@RequestBody TeamInfo teamInfo) {
+    public Result save(@RequestBody TeamInfo teamInfo){
         boolean flag_team = teamService.save(teamInfo.team);
 //        System.out.println(teamInfo.team.getId());
         teamInfo.team.setInfoId(teamInfo.team.getId());
@@ -57,23 +43,22 @@ public class TeamController {
         boolean flag_info = infoService.save(teamInfo.info);
 
         User ct_user = userService.getById(teamInfo.team.getCreatorId());
-        ct_user.setTeams(ct_user.getTeams() + "," + teamInfo.team.getId());
+        ct_user.setTeams(ct_user.getTeams()+","+teamInfo.team.getId());
         boolean flag_user = userService.update(ct_user);
         boolean flag = flag_team & flag_info & flag_user;
-        return new Result(flag ? Code.SAVE_TEAM_OK : Code.SAVE_TEAM_ERR, flag);
+        return new Result(flag ? Code.SAVE_TEAM_OK : Code.SAVE_TEAM_ERR,flag);
     }
-
     @PutMapping
-    public Result update(@RequestBody TeamInfo teamInfo) {
+    public Result update(@RequestBody TeamInfo teamInfo){
         boolean flag_team = teamService.update(teamInfo.team);
         teamInfo.info.setId(teamInfo.team.getId());
         boolean flag_info = infoService.update(teamInfo.info);
         boolean flag = flag_team & flag_info;
-        return new Result(flag ? Code.UPDATE_TEAM_OK : Code.UPDATE_TEAM_ERR, flag);
+        return new Result(flag ? Code.UPDATE_TEAM_OK : Code.UPDATE_TEAM_ERR,flag);
     }
 
     @GetMapping("/{id}")
-    public Result getById(@PathVariable Long id) {
+    public Result getById(@PathVariable Long id){
         Team team = teamService.getById(id);
         Integer code = null != team ? Code.GET_TEAM_OK : Code.GET_TEAM_ERR;
         String msg = null != team ? "" : "No team for this id";
@@ -85,23 +70,24 @@ public class TeamController {
         teamInfo.setInfo(info);
         teamInfo.setCommentList(commentService.getByTeamId(id));
         System.out.println(teamInfo);
-        return new Result(code, teamInfo, msg);
+        return new Result(code,teamInfo,msg);
     }
 
     @DeleteMapping("/{id}")
-    public Result deleteById(@PathVariable Long id) {
+    public Result deleteById(@PathVariable Long id){
         boolean flag = teamService.delete(id);
-        return new Result(flag ? Code.DELETE_TEAM_OK : Code.DELETE_TEAM_ERR, flag);
+        return new Result(flag ? Code.DELETE_TEAM_OK : Code.DELETE_TEAM_ERR,flag);
     }
 
     @GetMapping
-    public Result getAll() {
+    public Result getAll(){
         List<Team> teamList = teamService.getAll();
         Integer code = null != teamList ? Code.GET_ALL_TEAM_OK : Code.GET_ALL_TEAM_ERR;
         String msg = null != teamList ? "" : "No team list";
-        return new Result(code, teamList, msg);
+        return new Result(code,teamList,msg);
     }
-
+    
+    
 
 }
 

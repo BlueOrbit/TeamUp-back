@@ -5,7 +5,7 @@ import com.blueorbit.teamup.domain.User;
 import com.blueorbit.teamup.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 /**
@@ -17,6 +17,7 @@ import java.util.List;
  * @since 2022-11-02
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/users")
 public class UserController {
     @Autowired
