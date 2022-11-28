@@ -61,6 +61,13 @@ public class InfoServiceImpl implements IInfoService {
     }
 
     @Override
+    public List<Info> getByContent(String str) {
+        LambdaQueryWrapper<Info> lqw = new LambdaQueryWrapper<>();
+        lqw.like(Info::getContent,str);
+        return infoDao.selectList(lqw);
+    }
+
+    @Override
     public List<Info> getAll() {
         return infoDao.selectList(null);
     }

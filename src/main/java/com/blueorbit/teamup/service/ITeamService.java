@@ -1,6 +1,7 @@
 package com.blueorbit.teamup.service;
 
 import com.blueorbit.teamup.domain.Team;
+import com.blueorbit.teamup.domain.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -25,4 +26,5 @@ public interface ITeamService{
 
     public List<Team> getAll();
 
+    public boolean addUser(Long tid, Long uid);
 }

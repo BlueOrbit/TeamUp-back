@@ -1,14 +1,12 @@
 package com.blueorbit.teamup.controller;
 
 
-import com.blueorbit.teamup.dao.InfoDao;
 import com.blueorbit.teamup.domain.Info;
+import com.blueorbit.teamup.service.IInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,11 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/info")
 public class InfoController {
     @Autowired
-    private InfoDao infoDao;
+    private IInfoService iInfoService;
 
     @GetMapping("/getinfo/{id}")
-    public Info getInfo(@PathVariable int id){
-        return infoDao.selectById(id);
+    public Info getInfo(@PathVariable Long id){
+        return iInfoService.getById(id);
+    }
+
+    @PostMapping("/search")
+    public List<Info> searchInfoContent(@RequestBody Info info){
+        return iInfoService.getByContent(info.getContent());
     }
 
 }

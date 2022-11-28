@@ -27,6 +27,8 @@ public interface IInfoService {
 
     public Info getByTeamId(Long id);
 
+    public List<Info> getByContent(String str);
+
     public List<Info> getAll();
 
 }

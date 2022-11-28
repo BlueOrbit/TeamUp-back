@@ -3,6 +3,7 @@ package com.blueorbit.teamup.controller;
 
 import com.blueorbit.teamup.domain.Application;
 import com.blueorbit.teamup.service.IApplicationService;
+import com.blueorbit.teamup.service.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,9 @@ public class ApplicationController {
     @Autowired
     private IApplicationService applicationService;
 
+    @Autowired
+    private ITeamService iTeamService;
+
     @PostMapping
     public Result save(@RequestBody Application application){
         application.setState(Application.STATE.WAIT.ordinal());
@@ -31,6 +35,9 @@ public class ApplicationController {
     @PutMapping
     public Result update(@RequestBody Application application){
         boolean flag = applicationService.update(application);
+        if (application.getState() == Application.STATE.ACCEPT.ordinal()){
+            flag =flag && iTeamService.addUser(application.getTid(), application.getUid());
+        }
         return new Result(flag ? Code.UPDATE_APPLICATION_OK : Code.UPDATE_APPLICATION_ERR,flag);
     }
 

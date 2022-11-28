@@ -2,6 +2,7 @@ package com.blueorbit.teamup.service.impl;
 
 import com.blueorbit.teamup.domain.Team;
 import com.blueorbit.teamup.dao.TeamDao;
+import com.blueorbit.teamup.domain.User;
 import com.blueorbit.teamup.service.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,4 +49,10 @@ public class TeamServiceImpl  implements ITeamService {
     public List<Team> getAll() {
         return teamDao.selectList(null);
     }
+
+    @Override
+    public boolean addUser(Long tid, Long uid) {
+        return false;
+    }
+
 }
