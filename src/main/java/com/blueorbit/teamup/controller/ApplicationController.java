@@ -2,8 +2,11 @@ package com.blueorbit.teamup.controller;
 
 
 import com.blueorbit.teamup.domain.Application;
+import com.blueorbit.teamup.domain.Team;
+import com.blueorbit.teamup.domain.User;
 import com.blueorbit.teamup.service.IApplicationService;
 import com.blueorbit.teamup.service.ITeamService;
+import com.blueorbit.teamup.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +25,11 @@ import java.util.List;
 public class ApplicationController {
     @Autowired
     private IApplicationService applicationService;
-
     @Autowired
-    private ITeamService iTeamService;
+    private IUserService userService;
+    @Autowired
+    private ITeamService teamService;
+
 
     @PostMapping
     public Result save(@RequestBody Application application){
@@ -36,7 +41,14 @@ public class ApplicationController {
     public Result update(@RequestBody Application application){
         boolean flag = applicationService.update(application);
         if (application.getState() == Application.STATE.ACCEPT.ordinal()){
-            flag =flag && iTeamService.addUser(application.getTid(), application.getUid());
+            Long uid = application.getUid();
+            Long tid = application.getTid();
+            User user = userService.getById(uid);
+            Team team = teamService.getById(tid);
+            team.setTeammates(team.getTeammates()+uid+";");
+            user.setTeams(user.getTeams()+tid+";");
+            userService.update(user);
+            teamService.update(team);
         }
         return new Result(flag ? Code.UPDATE_APPLICATION_OK : Code.UPDATE_APPLICATION_ERR,flag);
     }

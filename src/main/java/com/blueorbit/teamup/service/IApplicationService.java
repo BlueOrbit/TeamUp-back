@@ -15,5 +15,8 @@ public interface IApplicationService {
 
     public Application getById(Long id);
 
+    public List<Application> getByUserId(Long uid);
+    public List<Application> getByTeamId(Long tid);
+
     public List<Application> getAll();
 }

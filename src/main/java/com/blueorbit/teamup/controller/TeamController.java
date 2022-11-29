@@ -3,13 +3,11 @@ package com.blueorbit.teamup.controller;
 import com.blueorbit.teamup.domain.Info;
 import com.blueorbit.teamup.domain.Team;
 import com.blueorbit.teamup.domain.User;
-import com.blueorbit.teamup.service.ICommentService;
-import com.blueorbit.teamup.service.IInfoService;
-import com.blueorbit.teamup.service.ITeamService;
-import com.blueorbit.teamup.service.IUserService;
+import com.blueorbit.teamup.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,19 +29,21 @@ public class TeamController {
     private IUserService userService;
     @Autowired
     private ICommentService commentService;
+    @Autowired
+    private IApplicationService applicationService;
     @PostMapping
     public Result save(@RequestBody TeamInfo teamInfo){
         boolean flag_team = teamService.save(teamInfo.team);
 //        System.out.println(teamInfo.team.getId());
         teamInfo.team.setInfoId(teamInfo.team.getId());
-        teamInfo.team.setTeammates(teamInfo.team.getCreatorId().toString());
+        teamInfo.team.setTeammates(teamInfo.team.getCreatorId().toString()+";");
         teamService.update(teamInfo.team);
 
         teamInfo.info.setTeamId(teamInfo.team.getId());
         boolean flag_info = infoService.save(teamInfo.info);
 
         User ct_user = userService.getById(teamInfo.team.getCreatorId());
-        ct_user.setTeams(ct_user.getTeams()+","+teamInfo.team.getId());
+        ct_user.setTeams(ct_user.getTeams()+teamInfo.team.getId()+";");
         boolean flag_user = userService.update(ct_user);
         boolean flag = flag_team & flag_info & flag_user;
         return new Result(flag ? Code.SAVE_TEAM_OK : Code.SAVE_TEAM_ERR,flag);
@@ -69,6 +69,7 @@ public class TeamController {
         teamInfo.setTeam(team);
         teamInfo.setInfo(info);
         teamInfo.setCommentList(commentService.getByTeamId(id));
+        teamInfo.setApplicationList(applicationService.getByTeamId(id));
         System.out.println(teamInfo);
         return new Result(code,teamInfo,msg);
     }
@@ -84,10 +85,17 @@ public class TeamController {
         List<Team> teamList = teamService.getAll();
         Integer code = null != teamList ? Code.GET_ALL_TEAM_OK : Code.GET_ALL_TEAM_ERR;
         String msg = null != teamList ? "" : "No team list";
-        return new Result(code,teamList,msg);
+        List<TeamInfo> teamInfoList = new ArrayList<>();
+        for (Team team:teamList
+             ) {
+            TeamInfo tmp = new TeamInfo();
+            tmp.setTeam(team);
+            tmp.setInfo(infoService.getById(team.getId()));
+            tmp.setCommentList(commentService.getByTeamId(team.getId()));
+            tmp.setApplicationList(applicationService.getByTeamId(team.getId()));
+            teamInfoList.add(tmp);
+        }
+        return new Result(code,teamInfoList,msg);
     }
-    
-    
-
 }
 

@@ -42,15 +42,19 @@ public class Code {
     public static final Integer GET_COMMENT_ERR = 200240;
     public static final Integer GET_ALL_COMMENT_ERR =200250;
 
-    public static final Integer SAVE_APPLICATION_OK = 200211;
-    public static final Integer DELETE_APPLICATION_OK = 200221;
-    public static final Integer UPDATE_APPLICATION_OK = 200231;
-    public static final Integer GET_APPLICATION_OK = 200241;
-    public static final Integer GET_ALL_APPLICATION_OK =200251;
+    public static final Integer SAVE_APPLICATION_OK = 200311;
+    public static final Integer DELETE_APPLICATION_OK = 200321;
+    public static final Integer UPDATE_APPLICATION_OK = 200331;
+    public static final Integer GET_APPLICATION_OK = 200341;
+    public static final Integer GET_ALL_APPLICATION_OK =200351;
 
-    public static final Integer SAVE_APPLICATION_ERR = 200210;
-    public static final Integer DELETE_APPLICATION_ERR = 200220;
-    public static final Integer UPDATE_APPLICATION_ERR = 200230;
-    public static final Integer GET_APPLICATION_ERR = 200240;
-    public static final Integer GET_ALL_APPLICATION_ERR =200250;
+    public static final Integer SAVE_APPLICATION_ERR = 200310;
+    public static final Integer DELETE_APPLICATION_ERR = 200320;
+    public static final Integer UPDATE_APPLICATION_ERR = 200330;
+    public static final Integer GET_APPLICATION_ERR = 200340;
+    public static final Integer GET_ALL_APPLICATION_ERR =200350;
+    public static final Integer SEARCH_INFO_OK =200501;
+    public static final Integer SEARCH_INFO_ERR =200500;
+
+
 }

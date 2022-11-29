@@ -8,4 +8,6 @@ public class Msg {
     public static final String LOGIN_NO_EMAIL = "This email does not exist!";
 
     public static final String LOGIN_WRONG_PASSWORD = "Wrong password!";
+
+    public static final String SEARCH_INFO_OK = "";
 }

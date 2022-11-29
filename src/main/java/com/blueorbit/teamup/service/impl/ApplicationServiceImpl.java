@@ -1,5 +1,6 @@
 package com.blueorbit.teamup.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.blueorbit.teamup.dao.ApplicationDao;
 import com.blueorbit.teamup.domain.Application;
 import com.blueorbit.teamup.service.IApplicationService;
@@ -42,6 +43,20 @@ public class ApplicationServiceImpl implements IApplicationService {
     @Override
     public Application getById(Long id) {
         return applicationDao.selectById(id);
+    }
+
+    @Override
+    public List<Application> getByUserId(Long uid) {
+        LambdaQueryWrapper<Application> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Application::getUid,uid);
+        return applicationDao.selectList(lqw);
+    }
+
+    @Override
+    public List<Application> getByTeamId(Long tid) {
+        LambdaQueryWrapper<Application> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Application::getTid,tid);
+        return applicationDao.selectList(lqw);
     }
 
     @Override

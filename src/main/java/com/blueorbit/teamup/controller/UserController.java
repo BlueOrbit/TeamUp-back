@@ -2,10 +2,14 @@ package com.blueorbit.teamup.controller;
 
 
 import com.blueorbit.teamup.domain.User;
+import com.blueorbit.teamup.service.IApplicationService;
+import com.blueorbit.teamup.service.ICommentService;
 import com.blueorbit.teamup.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +26,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ICommentService commentService;
+    @Autowired
+    private IApplicationService applicationService;
 
     @PostMapping
     public Result save(@RequestBody User user) {
@@ -45,7 +53,11 @@ public class UserController {
         User user = userService.getById(id);
         Integer code = null != user ? Code.GET_USER_OK : Code.GET_USER_ERR;
         String msg = null != user ? "" : "No user for this id";
-        return new Result(code, user, msg);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUser(user);
+        userInfo.setCommentList(commentService.getByUserId(user.getId()));
+        userInfo.setApplicationList(applicationService.getByUserId(user.getId()));
+        return new Result(code, userInfo, msg);
     }
 
     @DeleteMapping("/{id}")
@@ -59,7 +71,16 @@ public class UserController {
         List<User> userList = userService.getAll();
         Integer code = null != userList ? Code.GET_ALL_USER_OK : Code.GET_ALL_USER_ERR;
         String msg = null != userList ? "" : "No user list";
-        return new Result(code, userList, msg);
+        List<UserInfo> userInfoList = new ArrayList<>();
+        for (User user:userList
+             ) {
+            UserInfo tmp = new UserInfo();
+            tmp.setUser(user);
+            tmp.setCommentList(commentService.getByUserId(user.getId()));
+            tmp.setApplicationList(applicationService.getByUserId(user.getId()));
+            userInfoList.add(tmp);
+        }
+        return new Result(code, userInfoList, msg);
     }
 }
 

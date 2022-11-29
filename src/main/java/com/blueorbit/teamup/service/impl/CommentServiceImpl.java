@@ -53,6 +53,13 @@ public class CommentServiceImpl implements ICommentService {
     }
 
     @Override
+    public List<Comment> getByUserId(Long uid) {
+        LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(Comment::getSenderId,uid);
+        return commentDao.selectList(lqw);
+    }
+
+    @Override
     public List<Comment> getAll() {
         return commentDao.selectList(null);
     }
