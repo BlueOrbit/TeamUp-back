@@ -5,4 +5,4 @@ TeamUp back-end
 
 可参考src/doc/项目解释.md本地运行
 
-11/9 注意，mysql数据库已修改，需要重新创建！！！
+11/29 注意，mysql数据库已修改，增加application项，需要使用上面文档中附带sql代码重新创建
