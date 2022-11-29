@@ -35,7 +35,11 @@ public class UserController {
     public Result save(@RequestBody User user) {
         if (null != userService.getByEmail(user.getEmail())) {
             return new Result(Code.SAVE_USER_ERR, null, Msg.USER_ALREADY_EXIST);
-        } else {
+        } else if (user.getEmail().length() < 8) {
+            return new Result(Code.SAVE_USER_ERR,null,Msg.EMAIL_TOO_SHORT);
+        } else if (user.getPassword().length() < 6) {
+            return new Result(Code.SAVE_USER_ERR,null,Msg.PASSWORD_TOO_SHORT);
+        }else {
             user.setTeams("");
             boolean flag = userService.save(user);
             return new Result(flag ? Code.SAVE_USER_OK : Code.SAVE_USER_ERR, flag);
