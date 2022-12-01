@@ -1,57 +1,41 @@
 package com.blueorbit.teamup;
 
-import com.blueorbit.teamup.dao.InfoDao;
-import com.blueorbit.teamup.dao.TeamDao;
-import com.blueorbit.teamup.dao.UserDao;
-import com.blueorbit.teamup.domain.Info;
-import com.blueorbit.teamup.domain.Team;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.blueorbit.teamup.controller.Code;
+import com.blueorbit.teamup.controller.UserController;
+import com.blueorbit.teamup.domain.User;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.blueorbit.teamup.domain.User;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 class TeamUpApplicationTests {
 
-	@Autowired
-	private UserDao userDao;
-
-	@Autowired
-	private TeamDao teamDao;
-
-	@Autowired
-	private InfoDao infoDao;
-
-
-	void contextLoads() {
-		System.out.println("222");
-
-	}
-
-	void testInsert(){
+	@Test
+	public void testCreateUser(){
+		UserController userController = new UserController();
 		User user = new User();
-		user.setEmail("ooo");
-		user.setPassword("84fd");
-		user.setName("852");
-		user.setTeams("");
-		userDao.insert(user);
+		user.setEmail("TEST@8888");
+		user.setPassword("TEST@PASS");
+		assertEquals(Code.SAVE_USER_OK,userController.save(user).getCode());
+
+		user.setEmail("TEST@8888");
+		user.setPassword("TEST@PASS");
+		assertEquals(Code.SAVE_USER_ERR,userController.save(user).getCode());
+
+		user.setEmail("SHORT");
+		user.setPassword("TEST@PASS");
+		assertEquals(Code.SAVE_USER_ERR,userController.save(user).getCode());
+
+		user.setEmail("TEST@8888");
+		user.setPassword("SHORT");
+		assertEquals(Code.SAVE_USER_ERR,userController.save(user).getCode());
 	}
 
-	void testTeamInsert(){
-		Team team = new Team();
-		Info info = new Info();
-		info.setContent("introduction for team");
-		info.setCourse("course1");
-		info.setNumberLimit(8);
-		infoDao.insert(info);
-		System.out.println(info.getId());
-
-//		team.setCommentList("");
-//		team.setName("");
-//		team.setTeammates("");
-//		team.setCreator_id(1L);
-//		team.setInfoId(1L);
-//		teamDao.insert(team);
+	@Test
+	public void testGetUserById() {
+		UserController userController = new UserController();
+		User user = (User) userController.getById(1L).getData();
+		assertEquals(1L, user.getId().longValue());
 	}
-
 }
