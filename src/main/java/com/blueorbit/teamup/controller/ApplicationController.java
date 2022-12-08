@@ -32,12 +32,14 @@ public class ApplicationController {
 
 
     @PostMapping
+    @CrossOrigin
     public Result save(@RequestBody Application application){
         application.setState(Application.STATE.WAIT.ordinal());
         boolean flag = applicationService.save(application);
         return new Result(flag ? Code.SAVE_APPLICATION_OK : Code.SAVE_APPLICATION_ERR,flag);
     }
     @PutMapping
+    @CrossOrigin
     public Result update(@RequestBody Application application){
         boolean flag = applicationService.update(application);
         if (application.getState() == Application.STATE.ACCEPT.ordinal()){
@@ -54,6 +56,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public Result getById(@PathVariable Long id){
         Application application = applicationService.getById(id);
         Integer code = null != application ? Code.GET_APPLICATION_OK : Code.GET_APPLICATION_ERR;
@@ -62,12 +65,14 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public Result deleteById(@PathVariable Long id){
         boolean flag = applicationService.delete(id);
         return new Result(flag ? Code.DELETE_APPLICATION_OK : Code.DELETE_APPLICATION_ERR,flag);
     }
 
     @GetMapping
+    @CrossOrigin
     public Result getAll(){
         List<Application> applicationList = applicationService.getAll();
         Integer code = null != applicationList ? Code.GET_ALL_APPLICATION_OK : Code.GET_ALL_APPLICATION_ERR;

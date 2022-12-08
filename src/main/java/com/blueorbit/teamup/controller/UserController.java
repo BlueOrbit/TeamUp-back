@@ -32,6 +32,7 @@ public class UserController {
     private IApplicationService applicationService;
 
     @PostMapping
+    @CrossOrigin
     public Result save(@RequestBody User user) {
         if (null != userService.getByEmail(user.getEmail())) {
             return new Result(Code.SAVE_USER_ERR, null, Msg.USER_ALREADY_EXIST);
@@ -47,12 +48,14 @@ public class UserController {
     }
 
     @PutMapping
+    @CrossOrigin
     public Result update(@RequestBody User user) {
         boolean flag = userService.update(user);
         return new Result(flag ? Code.UPDATE_USER_OK : Code.UPDATE_USER_ERR, flag);
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public Result getById(@PathVariable Long id) {
         User user = userService.getById(id);
         Integer code = null != user ? Code.GET_USER_OK : Code.GET_USER_ERR;
@@ -65,12 +68,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public Result deleteById(@PathVariable Long id) {
         boolean flag = userService.delete(id);
         return new Result(flag ? Code.DELETE_USER_OK : Code.DELETE_USER_ERR, flag);
     }
 
     @GetMapping
+    @CrossOrigin
     public Result getAll() {
         List<User> userList = userService.getAll();
         Integer code = null != userList ? Code.GET_ALL_USER_OK : Code.GET_ALL_USER_ERR;

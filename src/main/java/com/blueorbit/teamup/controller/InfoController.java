@@ -36,11 +36,13 @@ public class InfoController {
 
 
     @GetMapping("/getinfo/{id}")
+    @CrossOrigin
     public Info getInfo(@PathVariable Long id){
         return infoService.getById(id);
     }
 
     @PostMapping("/search")
+    @CrossOrigin
     public Result searchInfoContent(@RequestBody Info info){
         List<Info> infos= infoService.getByContent(info.getContent());
         List<TeamInfo> teamInfoList = new ArrayList<>();

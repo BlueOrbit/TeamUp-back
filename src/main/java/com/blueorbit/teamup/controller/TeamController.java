@@ -32,6 +32,7 @@ public class TeamController {
     @Autowired
     private IApplicationService applicationService;
     @PostMapping
+    @CrossOrigin
     public Result save(@RequestBody TeamInfo teamInfo){
         boolean flag_team = teamService.save(teamInfo.team);
 //        System.out.println(teamInfo.team.getId());
@@ -49,6 +50,7 @@ public class TeamController {
         return new Result(flag ? Code.SAVE_TEAM_OK : Code.SAVE_TEAM_ERR,flag);
     }
     @PutMapping
+    @CrossOrigin
     public Result update(@RequestBody TeamInfo teamInfo){
         boolean flag_team = teamService.update(teamInfo.team);
         teamInfo.info.setId(teamInfo.team.getId());
@@ -58,6 +60,7 @@ public class TeamController {
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin
     public Result getById(@PathVariable Long id){
         Team team = teamService.getById(id);
         Integer code = null != team ? Code.GET_TEAM_OK : Code.GET_TEAM_ERR;
@@ -75,12 +78,14 @@ public class TeamController {
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public Result deleteById(@PathVariable Long id){
         boolean flag = teamService.delete(id);
         return new Result(flag ? Code.DELETE_TEAM_OK : Code.DELETE_TEAM_ERR,flag);
     }
 
     @GetMapping
+    @CrossOrigin
     public Result getAll(){
         List<Team> teamList = teamService.getAll();
         Integer code = null != teamList ? Code.GET_ALL_TEAM_OK : Code.GET_ALL_TEAM_ERR;
