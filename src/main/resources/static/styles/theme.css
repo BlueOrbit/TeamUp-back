@@ -1,0 +1,135 @@
+body[data-theme="light"] {
+    --bg: radial-gradient(circle at 20% 0%, #e6edff, #f6f9ff 45%, #f3f5ff 100%);
+    --text: #1d2544;
+    --muted: #667197;
+    --panel: rgba(255, 255, 255, 0.88);
+    --panel-strong: #ffffff;
+    --border: #d9e2ff;
+    --line: #dce4ff;
+    --focus: #6f87ff;
+    --brand-bg: linear-gradient(135deg, #3553ff, #6d7eff);
+    --brand-text: #ffffff;
+    --btn-ghost-bg: #eaf0ff;
+    --btn-ghost-text: #3752df;
+    --btn-primary-bg: #3f59ff;
+    --btn-primary-text: #ffffff;
+    --btn-accent-bg: #0da87c;
+    --btn-accent-text: #ffffff;
+    --btn-danger-bg: #d84f4f;
+    --btn-danger-text: #ffffff;
+    --badge-bg: #edf1ff;
+    --badge-text: #3e56dc;
+    --bg-orb: radial-gradient(circle, rgba(66, 95, 255, 0.22), rgba(66, 95, 255, 0));
+}
+
+body[data-theme="dark"] {
+    --bg: radial-gradient(circle at 20% 0%, #12182f, #0f1426 44%, #0b1020 100%);
+    --text: #e7ecff;
+    --muted: #a8b4de;
+    --panel: rgba(20, 27, 49, 0.86);
+    --panel-strong: #1a2342;
+    --border: #2a396b;
+    --line: #304373;
+    --focus: #7f98ff;
+    --brand-bg: linear-gradient(135deg, #556eff, #8c9cff);
+    --brand-text: #ffffff;
+    --btn-ghost-bg: #24335f;
+    --btn-ghost-text: #dbe3ff;
+    --btn-primary-bg: #5d74ff;
+    --btn-primary-text: #ffffff;
+    --btn-accent-bg: #11a780;
+    --btn-accent-text: #ffffff;
+    --btn-danger-bg: #dc5a5a;
+    --btn-danger-text: #ffffff;
+    --badge-bg: #273665;
+    --badge-text: #cdd7ff;
+    --bg-orb: radial-gradient(circle, rgba(95, 116, 255, 0.28), rgba(95, 116, 255, 0));
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.bg-decoration {
+    background: var(--bg-orb);
+}
+
+.topbar {
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+    border-bottom-color: var(--border);
+}
+
+.brand-mark {
+    background: var(--brand-bg);
+    color: var(--brand-text);
+}
+
+.brand-text p,
+.topbar-status p,
+.muted,
+.hint,
+.summary,
+.team-meta,
+.list-item small {
+    color: var(--muted);
+}
+
+.card,
+.team-item,
+.list-item {
+    background: var(--panel);
+    border-color: var(--border);
+}
+
+.empty {
+    border-color: var(--line);
+    color: var(--muted);
+}
+
+label {
+    color: var(--muted);
+}
+
+input,
+textarea {
+    background: var(--panel-strong);
+    color: var(--text);
+    border-color: var(--line);
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--focus);
+}
+
+.btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+.btn-accent {
+    background: var(--btn-accent-bg);
+    color: var(--btn-accent-text);
+}
+
+.btn-danger {
+    background: var(--btn-danger-bg);
+    color: var(--btn-danger-text);
+}
+
+.btn-ghost {
+    background: var(--btn-ghost-bg);
+    color: var(--btn-ghost-text);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--line);
+}
+
+.badge {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+}

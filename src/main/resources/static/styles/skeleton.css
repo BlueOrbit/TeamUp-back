@@ -1,0 +1,57 @@
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: rgba(134, 148, 194, 0.14);
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.34), transparent);
+    animation: shimmer 1.35s infinite;
+}
+
+body[data-theme="dark"] .skeleton {
+    background: rgba(141, 160, 227, 0.18);
+}
+
+body[data-theme="dark"] .skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(220, 231, 255, 0.18), transparent);
+}
+
+.skeleton-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    display: grid;
+    gap: 9px;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 8px;
+}
+
+.skeleton-line.w-30 {
+    width: 30%;
+}
+
+.skeleton-line.w-50 {
+    width: 50%;
+}
+
+.skeleton-line.w-70 {
+    width: 70%;
+}
+
+.skeleton-line.w-100 {
+    width: 100%;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
