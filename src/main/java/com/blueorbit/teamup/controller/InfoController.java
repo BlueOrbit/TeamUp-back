@@ -44,6 +44,9 @@ public class InfoController {
     @PostMapping("/search")
     @CrossOrigin
     public Result searchInfoContent(@RequestBody Info info){
+        if (info == null || info.getContent() == null || info.getContent().isBlank()) {
+            return new Result(Code.PARAM_ERR, null, Msg.PARAM_INVALID);
+        }
         List<Info> infos= infoService.getByContent(info.getContent());
         List<TeamInfo> teamInfoList = new ArrayList<>();
         for (Info i:infos
@@ -51,7 +54,7 @@ public class InfoController {
             TeamInfo tmp = new TeamInfo();
             Long tid = i.getTeamId();
             tmp.setTeam(teamService.getById(tid));
-            tmp.setInfo(infoService.getById(tid));
+            tmp.setInfo(infoService.getByTeamId(tid));
             tmp.setCommentList(commentService.getByTeamId(tid));
             tmp.setApplicationList(applicationService.getByTeamId(tid));
             teamInfoList.add(tmp);

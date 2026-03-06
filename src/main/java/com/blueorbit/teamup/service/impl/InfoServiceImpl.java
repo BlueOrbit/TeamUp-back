@@ -24,28 +24,24 @@ public class InfoServiceImpl implements IInfoService {
 
     @Override
     public boolean save(Info info) {
-        infoDao.insert(info);
-        return true;
+        return infoDao.insert(info) > 0;
     }
 
     @Override
     public boolean update(Info info) {
-        infoDao.updateById(info);
-        return true;
+        return infoDao.updateById(info) > 0;
     }
 
     @Override
     public boolean updateByTeamId(Info info,Long tid) {
         LambdaQueryWrapper<Info> lqw = new LambdaQueryWrapper<>();
         lqw.eq(Info::getTeamId,tid);
-        infoDao.update(info,lqw);
-        return true;
+        return infoDao.update(info,lqw) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
-        infoDao.deleteById(id);
-        return true;
+        return infoDao.deleteById(id) > 0;
     }
 
     @Override

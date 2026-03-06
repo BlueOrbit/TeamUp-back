@@ -2,6 +2,11 @@ package com.blueorbit.teamup.controller;
 
 public class Code {
 
+    public static final Integer AUTH_OK = 200001;
+    public static final Integer AUTH_ERR = 200000;
+    public static final Integer PARAM_ERR = 400000;
+    public static final Integer BIZ_ERR = 500000;
+
     public static final Integer LOGIN_OK = 200001;
 
     public static final Integer LOGIN_ERR = 200000;
@@ -55,6 +60,7 @@ public class Code {
     public static final Integer GET_ALL_APPLICATION_ERR =200350;
     public static final Integer SEARCH_INFO_OK =200501;
     public static final Integer SEARCH_INFO_ERR =200500;
+    public static final Integer FORBIDDEN_ERR = 200600;
 
 
 }

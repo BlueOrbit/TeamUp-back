@@ -15,4 +15,12 @@ public class Msg {
     public static final String LOGIN_WRONG_PASSWORD = "Wrong password!";
 
     public static final String SEARCH_INFO_OK = "";
+
+    public static final String PARAM_INVALID = "Invalid request parameters";
+
+    public static final String RESOURCE_NOT_FOUND = "Resource not found";
+
+    public static final String NO_PERMISSION = "No permission for this operation";
+
+    public static final String TOKEN_INVALID = "Invalid or expired token";
 }

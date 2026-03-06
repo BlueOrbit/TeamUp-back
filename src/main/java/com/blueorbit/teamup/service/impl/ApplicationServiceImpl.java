@@ -24,20 +24,17 @@ public class ApplicationServiceImpl implements IApplicationService {
 
     @Override
     public boolean save(Application application) {
-        applicationDao.insert(application);
-        return true;
+        return applicationDao.insert(application) > 0;
     }
 
     @Override
     public boolean update(Application application) {
-        applicationDao.updateById(application);
-        return true;
+        return applicationDao.updateById(application) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
-        applicationDao.deleteById(id);
-        return true;
+        return applicationDao.deleteById(id) > 0;
     }
 
     @Override

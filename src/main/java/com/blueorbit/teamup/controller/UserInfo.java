@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserInfo {
-    User user;
-    List<Comment> commentList;
-    List<Application> applicationList;
+    private User user;
+    private List<Comment> commentList;
+    private List<Application> applicationList;
 }
