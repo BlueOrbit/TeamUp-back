@@ -23,3 +23,12 @@
 - 除公开接口外，写操作需要请求头：
   - `Authorization: Bearer <token>`
 
+## 前端（新增）
+
+项目已新增 `frontend/` 目录（React + Vite）：
+
+- 进入前端目录：`cd frontend`
+- 安装依赖：`npm install`
+- 本地运行：`npm run dev`
+- 构建：`npm run build`
+

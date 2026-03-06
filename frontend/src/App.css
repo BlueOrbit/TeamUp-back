@@ -1,0 +1,158 @@
+.page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header h1 {
+  margin-bottom: 8px;
+}
+
+.header p {
+  margin-top: 0;
+  color: #555;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  border: 1px solid #d0d7de;
+  background: #fff;
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #1f6feb;
+  border-color: #1f6feb;
+  color: #fff;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 16px;
+}
+
+.panel {
+  border: 1px solid #d0d7de;
+  border-radius: 12px;
+  padding: 14px;
+  background: #fff;
+}
+
+.panel.main {
+  min-height: 760px;
+}
+
+.notice {
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.notice.ok {
+  background: #dafbe1;
+  color: #055d20;
+}
+
+.notice.err {
+  background: #ffebe9;
+  color: #cf222e;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form input,
+.form textarea,
+.inline-form input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.inline-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+button {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #f6f8fa;
+  color: #111;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+button.danger {
+  background: #cf222e;
+  border-color: #cf222e;
+  color: #fff;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) 1fr;
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.detail ul {
+  padding-left: 20px;
+}
+
+.detail li {
+  margin-bottom: 8px;
+}
+
+.row-actions {
+  display: inline-flex;
+  gap: 6px;
+  margin-left: 8px;
+}
+
+.multiline {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 1100px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
