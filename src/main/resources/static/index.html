@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp 课程组队平台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<div class="bg-decoration"></div>
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-mark">TU</span>
+        <div class="brand-text">
+            <h1>TeamUp</h1>
+            <p>课程组队与协作平台</p>
+        </div>
+    </div>
+    <div class="topbar-actions">
+        <button id="refreshBtn" class="btn btn-ghost" type="button">刷新数据</button>
+        <button id="logoutBtn" class="btn btn-danger hidden" type="button">退出登录</button>
+    </div>
+</header>
+
+<main class="layout">
+    <aside class="panel left-panel">
+        <section class="card status-card">
+            <h2>当前状态</h2>
+            <p id="sessionHint">未登录（可浏览队伍、搜索信息）</p>
+        </section>
+
+        <section class="card">
+            <h2>注册账号</h2>
+            <form id="registerForm" class="form-grid">
+                <label>昵称
+                    <input name="name" type="text" maxlength="32" placeholder="例如：小蓝">
+                </label>
+                <label>邮箱
+                    <input name="email" type="email" required placeholder="name@example.com">
+                </label>
+                <label>密码
+                    <input name="password" type="password" required minlength="6" placeholder="至少 6 位">
+                </label>
+                <button class="btn btn-primary" type="submit">注册</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>登录</h2>
+            <form id="loginForm" class="form-grid">
+                <label>邮箱
+                    <input name="email" type="email" required placeholder="name@example.com">
+                </label>
+                <label>密码
+                    <input name="password" type="password" required placeholder="输入密码">
+                </label>
+                <button class="btn btn-primary" type="submit">登录并保存会话</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <h2>发布队伍</h2>
+            <form id="createTeamForm" class="form-grid">
+                <label>队伍名称
+                    <input name="name" type="text" required maxlength="32" placeholder="如：Java课程第7组">
+                </label>
+                <label>课程名称
+                    <input name="course" type="text" required maxlength="32" placeholder="如：软件工程">
+                </label>
+                <label>人数上限
+                    <input name="numberLimit" type="number" min="1" max="20" required value="4">
+                </label>
+                <label>招募描述
+                    <textarea name="content" rows="3" required maxlength="255" placeholder="简单介绍项目方向、技能需求"></textarea>
+                </label>
+                <button class="btn btn-accent" type="submit">创建队伍</button>
+            </form>
+        </section>
+    </aside>
+
+    <section class="panel right-panel">
+        <section class="card toolbar">
+            <form id="searchForm" class="search-form">
+                <input id="searchInput" name="keyword" type="text" maxlength="255" placeholder="按招募描述关键词搜索队伍（如：前端、算法）">
+                <button class="btn btn-primary" type="submit">搜索</button>
+                <button id="resetSearchBtn" class="btn btn-ghost" type="button">清除</button>
+            </form>
+            <div id="summaryText" class="summary">正在加载队伍数据...</div>
+        </section>
+
+        <section id="teamList" class="team-list"></section>
+
+        <section id="teamDetail" class="card team-detail hidden">
+            <div class="detail-header">
+                <h2 id="detailTitle">队伍详情</h2>
+                <button id="closeDetailBtn" class="btn btn-ghost" type="button">关闭</button>
+            </div>
+            <div id="detailMeta" class="detail-meta"></div>
+            <p id="detailContent" class="detail-content"></p>
+
+            <div class="detail-columns">
+                <div class="sub-card">
+                    <h3>评论区</h3>
+                    <ul id="commentList" class="list"></ul>
+                    <form id="commentForm" class="form-grid compact">
+                        <label>发送评论
+                            <textarea name="content" rows="2" maxlength="255" required placeholder="输入你的建议或问题"></textarea>
+                        </label>
+                        <button class="btn btn-primary" type="submit">发表评论</button>
+                    </form>
+                </div>
+                <div class="sub-card">
+                    <h3>入队申请</h3>
+                    <ul id="applicationList" class="list"></ul>
+                    <form id="applicationForm" class="form-grid compact">
+                        <label>申请留言
+                            <textarea name="msg" rows="2" maxlength="255" required placeholder="简要说明你的优势与可投入时间"></textarea>
+                        </label>
+                        <button class="btn btn-accent" type="submit">提交申请</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+
+<div id="toastContainer" class="toast-container"></div>
+<script src="./app.js"></script>
+</body>
+</html>
