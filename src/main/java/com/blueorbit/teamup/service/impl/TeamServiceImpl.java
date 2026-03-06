@@ -23,20 +23,17 @@ public class TeamServiceImpl  implements ITeamService {
 
     @Override
     public boolean save(Team team) {
-        teamDao.insert(team);
-        return true;
+        return teamDao.insert(team) > 0;
     }
 
     @Override
     public boolean update(Team team) {
-        teamDao.updateById(team);
-        return true;
+        return teamDao.updateById(team) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
-        teamDao.deleteById(id);
-        return true;
+        return teamDao.deleteById(id) > 0;
     }
 
     @Override

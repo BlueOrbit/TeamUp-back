@@ -8,8 +8,18 @@
 ## start up
 
 - 在mysql中用`src\doc\teamupsql.sql`创建后端数据库
-- 修改`\src\main\resources\application.yml`中的账号密码等以连接数据库
+- 通过环境变量配置数据库连接（推荐）：
+  - `DB_URL`
+  - `DB_USERNAME`
+  - `DB_PASSWORD`
 -  `mvn compile`获取依赖项
 -  `mvn install`编译打包
 -  `java -jar ./target/TeamUp-0.0.1-SNAPSHOT.jar`开始运行
+
+## 鉴权说明
+
+- 注册：`POST /users`
+- 登录：`POST /login`，返回 `token`
+- 除公开接口外，写操作需要请求头：
+  - `Authorization: Bearer <token>`
 

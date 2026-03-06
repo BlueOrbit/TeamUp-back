@@ -24,20 +24,17 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean save(User user) {
-        userDao.insert(user);
-        return true;
+        return userDao.insert(user) > 0;
     }
 
     @Override
     public boolean update(User user) {
-        userDao.updateById(user);
-        return true;
+        return userDao.updateById(user) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
-        userDao.deleteById(id);
-        return true;
+        return userDao.deleteById(id) > 0;
     }
 
     @Override

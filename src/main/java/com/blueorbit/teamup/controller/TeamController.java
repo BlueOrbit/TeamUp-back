@@ -1,14 +1,20 @@
 package com.blueorbit.teamup.controller;
 
+import com.blueorbit.teamup.auth.AuthHelper;
+import com.blueorbit.teamup.domain.Application;
+import com.blueorbit.teamup.domain.Comment;
 import com.blueorbit.teamup.domain.Info;
 import com.blueorbit.teamup.domain.Team;
-import com.blueorbit.teamup.domain.User;
 import com.blueorbit.teamup.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -21,41 +27,62 @@ import java.util.List;
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
-    @Autowired
-    private ITeamService teamService;
-    @Autowired
-    private IInfoService infoService;
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private ICommentService commentService;
-    @Autowired
-    private IApplicationService applicationService;
+    private final ITeamService teamService;
+    private final IInfoService infoService;
+    private final ICommentService commentService;
+    private final IApplicationService applicationService;
+    private final IWorkflowService workflowService;
+
+    public TeamController(ITeamService teamService,
+                          IInfoService infoService,
+                          ICommentService commentService,
+                          IApplicationService applicationService,
+                          IWorkflowService workflowService) {
+        this.teamService = teamService;
+        this.infoService = infoService;
+        this.commentService = commentService;
+        this.applicationService = applicationService;
+        this.workflowService = workflowService;
+    }
+
     @PostMapping
     @CrossOrigin
-    public Result save(@RequestBody TeamInfo teamInfo){
-        boolean flag_team = teamService.save(teamInfo.team);
-//        System.out.println(teamInfo.team.getId());
-        teamInfo.team.setInfoId(teamInfo.team.getId());
-        teamInfo.team.setTeammates(teamInfo.team.getCreatorId().toString()+";");
-        teamService.update(teamInfo.team);
-
-        teamInfo.info.setTeamId(teamInfo.team.getId());
-        boolean flag_info = infoService.save(teamInfo.info);
-
-        User ct_user = userService.getById(teamInfo.team.getCreatorId());
-        ct_user.setTeams(ct_user.getTeams()+teamInfo.team.getId()+";");
-        boolean flag_user = userService.update(ct_user);
-        boolean flag = flag_team & flag_info & flag_user;
+    public Result save(@RequestBody TeamInfo teamInfo, HttpServletRequest request){
+        Long currentUserId = AuthHelper.currentUserId(request);
+        if (currentUserId == null) {
+            return new Result(Code.AUTH_ERR, null, Msg.TOKEN_INVALID);
+        }
+        if (teamInfo == null || teamInfo.getTeam() == null || teamInfo.getInfo() == null) {
+            return new Result(Code.PARAM_ERR, null, Msg.PARAM_INVALID);
+        }
+        if (!Objects.equals(currentUserId, teamInfo.getTeam().getCreatorId())) {
+            return new Result(Code.FORBIDDEN_ERR, null, Msg.NO_PERMISSION);
+        }
+        boolean flag = workflowService.createTeam(teamInfo);
         return new Result(flag ? Code.SAVE_TEAM_OK : Code.SAVE_TEAM_ERR,flag);
     }
+
     @PutMapping
     @CrossOrigin
-    public Result update(@RequestBody TeamInfo teamInfo){
-        boolean flag_team = teamService.update(teamInfo.team);
-        teamInfo.info.setId(teamInfo.team.getId());
-        boolean flag_info = infoService.update(teamInfo.info);
-        boolean flag = flag_team & flag_info;
+    public Result update(@RequestBody TeamInfo teamInfo, HttpServletRequest request){
+        Long currentUserId = AuthHelper.currentUserId(request);
+        if (currentUserId == null) {
+            return new Result(Code.AUTH_ERR, null, Msg.TOKEN_INVALID);
+        }
+        if (teamInfo == null || teamInfo.getTeam() == null || teamInfo.getTeam().getId() == null) {
+            return new Result(Code.PARAM_ERR, null, Msg.PARAM_INVALID);
+        }
+        Team dbTeam = teamService.getById(teamInfo.getTeam().getId());
+        if (dbTeam == null) {
+            return new Result(Code.GET_TEAM_ERR, null, Msg.RESOURCE_NOT_FOUND);
+        }
+        if (!Objects.equals(currentUserId, dbTeam.getCreatorId())) {
+            return new Result(Code.FORBIDDEN_ERR, null, Msg.NO_PERMISSION);
+        }
+        teamInfo.getTeam().setCreatorId(dbTeam.getCreatorId());
+        teamInfo.getTeam().setTeammates(dbTeam.getTeammates());
+        teamInfo.getTeam().setInfoId(dbTeam.getInfoId());
+        boolean flag = workflowService.updateTeam(teamInfo);
         return new Result(flag ? Code.UPDATE_TEAM_OK : Code.UPDATE_TEAM_ERR,flag);
     }
 
@@ -63,23 +90,32 @@ public class TeamController {
     @CrossOrigin
     public Result getById(@PathVariable Long id){
         Team team = teamService.getById(id);
-        Integer code = null != team ? Code.GET_TEAM_OK : Code.GET_TEAM_ERR;
-        String msg = null != team ? "" : "No team for this id";
-        System.out.println(team);
+        if (team == null) {
+            return new Result(Code.GET_TEAM_ERR, null, Msg.RESOURCE_NOT_FOUND);
+        }
         Info info = infoService.getByTeamId(id);
-        System.out.println(info);
         TeamInfo teamInfo = new TeamInfo();
         teamInfo.setTeam(team);
         teamInfo.setInfo(info);
         teamInfo.setCommentList(commentService.getByTeamId(id));
         teamInfo.setApplicationList(applicationService.getByTeamId(id));
-        System.out.println(teamInfo);
-        return new Result(code,teamInfo,msg);
+        return new Result(Code.GET_TEAM_OK,teamInfo,"");
     }
 
     @DeleteMapping("/{id}")
     @CrossOrigin
-    public Result deleteById(@PathVariable Long id){
+    public Result deleteById(@PathVariable Long id, HttpServletRequest request){
+        Long currentUserId = AuthHelper.currentUserId(request);
+        if (currentUserId == null) {
+            return new Result(Code.AUTH_ERR, null, Msg.TOKEN_INVALID);
+        }
+        Team dbTeam = teamService.getById(id);
+        if (dbTeam == null) {
+            return new Result(Code.DELETE_TEAM_ERR, null, Msg.RESOURCE_NOT_FOUND);
+        }
+        if (!Objects.equals(currentUserId, dbTeam.getCreatorId())) {
+            return new Result(Code.FORBIDDEN_ERR, null, Msg.NO_PERMISSION);
+        }
         boolean flag = teamService.delete(id);
         return new Result(flag ? Code.DELETE_TEAM_OK : Code.DELETE_TEAM_ERR,flag);
     }
@@ -90,14 +126,23 @@ public class TeamController {
         List<Team> teamList = teamService.getAll();
         Integer code = null != teamList ? Code.GET_ALL_TEAM_OK : Code.GET_ALL_TEAM_ERR;
         String msg = null != teamList ? "" : "No team list";
+        List<Info> allInfo = infoService.getAll();
+        Map<Long, Info> infoByTeamId = allInfo.stream()
+                .filter(info -> info.getTeamId() != null)
+                .collect(Collectors.toMap(Info::getTeamId, info -> info, (left, right) -> left));
+        List<Comment> allComments = commentService.getAll();
+        Map<Long, List<Comment>> commentsByTeamId = allComments.stream()
+                .collect(Collectors.groupingBy(Comment::getTeamId));
+        List<Application> allApplications = applicationService.getAll();
+        Map<Long, List<Application>> applicationsByTeamId = allApplications.stream()
+                .collect(Collectors.groupingBy(Application::getTid));
         List<TeamInfo> teamInfoList = new ArrayList<>();
-        for (Team team:teamList
-             ) {
+        for (Team team:teamList) {
             TeamInfo tmp = new TeamInfo();
             tmp.setTeam(team);
-            tmp.setInfo(infoService.getById(team.getId()));
-            tmp.setCommentList(commentService.getByTeamId(team.getId()));
-            tmp.setApplicationList(applicationService.getByTeamId(team.getId()));
+            tmp.setInfo(infoByTeamId.get(team.getId()));
+            tmp.setCommentList(commentsByTeamId.getOrDefault(team.getId(), Collections.emptyList()));
+            tmp.setApplicationList(applicationsByTeamId.getOrDefault(team.getId(), Collections.emptyList()));
             teamInfoList.add(tmp);
         }
         return new Result(code,teamInfoList,msg);

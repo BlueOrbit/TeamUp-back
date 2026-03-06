@@ -11,8 +11,8 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class TeamInfo{
-    public Team team;
-    public Info info;
-    public List<Comment> commentList;
-    public List<Application> applicationList;
+    private Team team;
+    private Info info;
+    private List<Comment> commentList;
+    private List<Application> applicationList;
 }

@@ -24,20 +24,17 @@ public class CommentServiceImpl implements ICommentService {
 
     @Override
     public boolean save(Comment comment) {
-        commentDao.insert(comment);
-        return true;
+        return commentDao.insert(comment) > 0;
     }
 
     @Override
     public boolean update(Comment comment) {
-        commentDao.updateById(comment);
-        return true;
+        return commentDao.updateById(comment) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
-        commentDao.deleteById(id);
-        return true;
+        return commentDao.deleteById(id) > 0;
     }
 
     @Override
