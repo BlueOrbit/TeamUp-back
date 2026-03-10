@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamUp 课程组队平台</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/base.css">
+    <link rel="stylesheet" href="./styles/theme.css">
+    <link rel="stylesheet" href="./styles/skeleton.css">
+</head>
+<body data-theme="light">
+<div class="bg-decoration"></div>
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-mark">TU</span>
+        <div class="brand-text">
+            <h1>TeamUp</h1>
+            <p id="routeLabel">队伍广场</p>
+        </div>
+    </div>
+    <div class="topbar-status">
+        <p id="sessionHint">游客模式：可浏览、搜索</p>
+    </div>
+    <div class="topbar-actions">
+        <button id="themeBtn" class="btn btn-ghost" type="button">切换暗色</button>
+        <button id="refreshBtn" class="btn btn-ghost" type="button">刷新当前页</button>
+        <button id="logoutBtn" class="btn btn-danger hidden" type="button">退出登录</button>
+    </div>
+</header>
+
+<main id="app" class="page-shell"></main>
+
+<div id="toastContainer" class="toast-container"></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
